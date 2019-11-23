@@ -16,9 +16,10 @@ def dashboard():
     if "user" not in session:
         return redirect("/index")
 
-    balance_history = [b for b in MongoDatabase.yield_balance(student_records, transaction_records, session["user"].id, "personal")]
+    balance_history = session["user"].generate_account_history("personal")
+    balance = [balance_history[k] for k in balance_history]
 
-    return render_template("dashboard.html", title="Dashboard", user=(session["user"] if "user" in session else None), balance_history = balance_history)
+    return render_template("dashboard.html", title="Dashboard", user=(session["user"] if "user" in session else None), balance_history=balance)
 
 @app.route("/register", methods=["GET"])
 def register():
@@ -39,7 +40,7 @@ def process_register():
         first_name = form.first_name.data
         last_name = form.last_name.data
         hashed = bcrypt.generate_password_hash(password).decode("utf-8")
-        MongoDatabase.insert_new_user(student_records, first_name, last_name, email, hashed)
+        MongoDatabase.insert_new_user(first_name, last_name, email, hashed)
         ##flash("{}, {}, {}, {}".format(email, password, first_name, last_name))
         return redirect("/login")
 
