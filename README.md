@@ -1,5 +1,7 @@
 # DURHACK2019
 
+Website: https://hackerbyname.github.io/DURHACK2019/
+
 PLAN: Student budgeting web-app
 
 > as many bank accounts as necessary
