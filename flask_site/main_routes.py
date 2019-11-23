@@ -16,15 +16,18 @@ def dashboard():
 
     return render_template("dashboard.html", title="Dashboard", user=(session["user"] if "user" in session else None), balance_history=balance)
 
+@app.route("/accounts")
+def accounts():
+    return render_template("accounts.html", title="Accounts", user=(session["user"] if "user" in session else None))
 
+@app.route("/history")
+def history():
+    return render_template("history.html", title="History", user=(session["user"] if "user" in session else None))
 
 @app.route("/settings")
 def settings():
-    #logic here
-
     return render_template("settings.html", title="Settings", user=(session["user"] if "user" in session else None))
 
 @app.route("/user")
 def user():
-
     return render_template("user.html", title="User Settings", user=(session["user"] if "user" in session else None))
