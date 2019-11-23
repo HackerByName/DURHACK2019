@@ -9,3 +9,8 @@ def settings():
     #logic here
 
     return render_template("settings.html", title="Settings", user=(session["user"] if "user" in session else None))
+
+@app.route("/user")
+def user():
+
+    return render_template("user.html", title="User Settings", user=(session["user"] if "user" in session else None))
