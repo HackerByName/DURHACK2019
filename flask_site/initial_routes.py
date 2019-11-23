@@ -11,25 +11,11 @@ def index():
         return redirect("/dashboard")
     return render_template("base.html", title="Homepage", user=(session["user"] if "user" in session else None))
 
-@app.route("/dashboard")
-def dashboard():
-    if "user" not in session:
-        return redirect("/index")
-
-    balance_history = session["user"].generate_account_history("personal")
-    balance = [balance_history[k] for k in balance_history]
-
-    return render_template("dashboard.html", title="Dashboard", user=(session["user"] if "user" in session else None), balance_history=balance)
-
 @app.route("/register", methods=["GET"])
 def register():
     register_form = RegisterForm()
     return render_template("register.html", form=register_form, title="Register", user=(session["user"] if "user" in session else None))
-
-@app.route("/good")
-def good():
-    return render_template("index_good.html", title="Register", user=(session["user"] if "user" in session else None))
-
+    
 @app.route("/register", methods=["POST"])
 def process_register():
     form = RegisterForm()

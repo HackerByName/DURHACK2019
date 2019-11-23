@@ -23,5 +23,5 @@ app.config["SESSION_TYPE"] = "mongodb"
 bcrypt = Bcrypt(app)
 Session(app)
 
-from flask_site import routes
-from flask_site import more_routes
+from flask_site import initial_routes
+from flask_site import main_routes
