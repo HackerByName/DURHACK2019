@@ -5,6 +5,7 @@
     {% else %}
     <title>No title :(</title>
     {% endif %}
+  </head>
   <body>
     {% with messages = get_flashed_messages() %}
     {% if messages %}
@@ -17,5 +18,4 @@
     {% endwith %}
     {% block content %}{% endblock %}
   </body>
-  </head>
 </html>

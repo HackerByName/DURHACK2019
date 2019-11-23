@@ -25,12 +25,17 @@ def process_register():
         hashed = bcrypt.generate_password_hash(password).decode("utf-8")
         mongo.Mongo.insertNewUser(student_records, first_name, last_name, email, hashed)
         flash("{}, {}, {}, {}".format(email, password, first_name, last_name))
-        return redirect("/index")
+        return redirect("/login")
 
     return render_template("register.html", title="Register", form=form)
 
 @app.route("/login", methods=["GET"])
 def login():
+    flash("Already logged in")
+
+    if "email" in session:
+        return redirect("/index")
+
     login_form = LoginForm()
     return render_template("login.html", form=login_form)
 
@@ -52,7 +57,19 @@ def process_login():
             flash("Wrong password")
             return redirect("/index")
 
+        session["email"] = email
+
         flash("Logged in, {}".format(email))
         return redirect("/index")
 
     return render_template("login.html", title="Login", form=form)
+
+@app.route("/logout")
+def logout():
+    if "email" in session:
+        flash("Logged out")
+        session.pop("email", None)
+    else:
+        flash("You weren't logged in anyway")
+
+    return redirect("/index")
