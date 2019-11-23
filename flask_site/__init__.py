@@ -10,6 +10,7 @@ bcrypt = Bcrypt(app)
 app.config.from_object(Config)
 
 database_client = MongoClient("mongodb+srv://max:Password123@studentfinancecluster-hl4cr.mongodb.net/test?retryWrites=true&w=majority")
+#a
 database_student = database_client.get_database("student_db")
 student_records = database_student.students
 transaction_records = database_student.transactions
