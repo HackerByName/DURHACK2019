@@ -13,7 +13,12 @@ def index():
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html", title="Dashboard", user=(session["user"] if "user" in session else None))
+    if "user" not in session:
+        return redirect("/index")
+
+    balance_history = [b for b in MongoDatabase.yield_balance(student_records, transaction_records, session["user"].id, "personal")]
+
+    return render_template("dashboard.html", title="Dashboard", user=(session["user"] if "user" in session else None), balance_history = balance_history)
 
 @app.route("/register", methods=["GET"])
 def register():

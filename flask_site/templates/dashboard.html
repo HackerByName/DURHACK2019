@@ -23,6 +23,9 @@
 	<div class="col-md-9 container-border">
 		<div class="card card-body bg-secondary" style="height:100%">
 			<h2>Something!!!!</h2>
+      {% for balance in balance_history %}
+      <span style="color: red;">£{{ balance }}</span><br>
+      {% endfor %}
 		</div>
 	</div>
 </div>
