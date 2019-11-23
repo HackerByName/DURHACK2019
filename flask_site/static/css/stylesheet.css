@@ -1,3 +1,12 @@
-* {
+.container-border{
+  border: 1px solid #ccc;
+  border-radius: 7px;
+}
 
+.container-grey {
+  background-color: #e6e6e6
+}
+
+.text-large {
+  font-size: 150%;
 }

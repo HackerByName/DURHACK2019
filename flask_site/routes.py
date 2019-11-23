@@ -7,7 +7,13 @@ from .helper import Verifications, User
 @app.route("/")
 @app.route("/index")
 def index():
+    if ("user" in session):
+        return redirect("/dashboard")
     return render_template("base.html", title="Homepage", user=(session["user"] if "user" in session else None))
+
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html", title="Dashboard", user=(session["user"] if "user" in session else None))
 
 @app.route("/register", methods=["GET"])
 def register():
