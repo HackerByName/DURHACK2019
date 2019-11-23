@@ -14,3 +14,7 @@ def another():
 def user_test():
     user = {"username": "Finlay"}
     return render_template("index.html", title="User", user=user)
+
+@app.route("/config")
+def config_display():
+    return render_template("display.html", skey=app.config["SECRET_KEY"]);
