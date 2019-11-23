@@ -14,13 +14,13 @@ MAIN FUNCTIONALITY:
 
 """
 
-class Mongo:
+class MongoDatabase:
     @staticmethod
-    def printAllRecords(records):
+    def print_all_records(records):
         pprint(list(records.find()))
 
     @staticmethod
-    def insertNewUser(records, first_name, last_name, email, password):
+    def insert_new_user(records, first_name, last_name, email, password):
         newUser = {
             'first_name' : str(first_name),
             'last_name' : str(last_name),
@@ -31,7 +31,7 @@ class Mongo:
         records.insert_one(newUser)
 
     @staticmethod
-    def newTransaction(transaction_records, student_id, account_name, money_spent):
+    def create_new_transaction(transaction_records, student_id, account_name, money_spent):
         newTransaction = {
             'student_id' : str(student_id),
             'account_name' : str(account_name),
@@ -42,16 +42,16 @@ class Mongo:
         transaction_records.insert_one(newTransaction)
 
     @staticmethod
-    def getAccountIndexFromName(account_array, account_name):
+    def get_account_from_index(account_array, account_name):
         for i in range(0, len(account_array)):
             if (account_array[i]['account_name'] == account_name):
                 return i
         return -1
 
     @staticmethod
-    def addAccountToUser(records, first_name, last_name, account_name, initial_balance):
-        user = getStudent(records, first_name, last_name)
-        user_id = getStudentID(records, first_name, last_name)
+    def add_account_to_user(records, first_name, last_name, account_name, initial_balance):
+        user = get_student(records, first_name, last_name)
+        user_id = get_student_id(records, first_name, last_name)
         accountArray = user['accounts']
         accountArray.append({
             'account_name' : account_name,
@@ -62,19 +62,19 @@ class Mongo:
         records.update({'_id':user_id}, {"$set": newDictionary}, upsert=False)
 
     @staticmethod
-    def getStudent(records, first_name, last_name):
+    def get_student(records, first_name, last_name):
         return records.find_one({"first_name":str(first_name),"last_name":str(last_name)})
 
     @staticmethod
-    def getStudentID(records, first_name, last_name):
-        return getStudent(records, first_name, last_name)['_id']
+    def get_student_id(records, first_name, last_name):
+        return get_student(records, first_name, last_name)['_id']
 
     @staticmethod
     def find_record(records, filter):
         return records.find_one(filter)
 
     @staticmethod
-    def getBalance(student_records, transaction_records, student_id, account_name):
+    def get_balance(student_records, transaction_records, student_id, account_name):
         user = student_records.find_one({"_id":student_id})
         currentBalance = float(user['accounts'][getAccountIndexFromName(user['accounts'], account_name)]['balance'])
 

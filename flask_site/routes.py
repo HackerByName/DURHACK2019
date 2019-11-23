@@ -1,7 +1,8 @@
 from flask_site import *
 from flask import render_template, flash, redirect
 from flask_site.forms import LoginForm, RegisterForm
-from . import mongo
+from .mongo import MongoDatabase
+from .helper import Verifications
 
 @app.route("/")
 @app.route("/index")
@@ -23,17 +24,16 @@ def process_register():
         first_name = form.first_name.data
         last_name = form.last_name.data
         hashed = bcrypt.generate_password_hash(password).decode("utf-8")
-        mongo.Mongo.insertNewUser(student_records, first_name, last_name, email, hashed)
-        flash("{}, {}, {}, {}".format(email, password, first_name, last_name))
+        MongoDatabase.insertNewUser(student_records, first_name, last_name, email, hashed)
+        #flash("{}, {}, {}, {}".format(email, password, first_name, last_name))
         return redirect("/login")
 
     return render_template("register.html", title="Register", form=form)
 
 @app.route("/login", methods=["GET"])
 def login():
-    flash("Already logged in")
-
-    if "email" in session:
+    if Verifications.is_logged_in():
+        flash("Already logged in")
         return redirect("/index")
 
     login_form = LoginForm()
@@ -46,7 +46,7 @@ def process_login():
     if form.validate_on_submit():
         email = form.email.data
         password = form.password.data
-        user_record = mongo.Mongo.find_record(student_records, {"email": email})
+        user_record = MongoDatabase.find_record(student_records, {"email": email})
 
         if user_record == None:
             flash("Wrong username")
@@ -66,9 +66,9 @@ def process_login():
 
 @app.route("/logout")
 def logout():
-    if "email" in session:
+    if Verifications.is_logged_in():
         flash("Logged out")
-        session.pop("email", None)
+        Verifications.logout()
     else:
         flash("You weren't logged in anyway")
 
