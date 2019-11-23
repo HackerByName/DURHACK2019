@@ -1,22 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
-    <h1>Login</h1>
+<div class="pt-5">
+  <h1 class="text-center">Login</h1>
+  <div style="width: 30%; margin: 25px auto;">
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32) }}
+        <div class="form-group">
+            <label for="email">{{ form.email.label }}</label>
+            <div class="form-control"><div class="input text">{{ form.email }}</div></div>
             {% for error in form.email.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
+        </div>
+        <div class="form-group">
+            <label for="password">{{ form.password.label }}</label>
+            <div class="form-control">{{ form.password }}</div>
             {% for error in form.password.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
+        </div>
+        <div class="form-group">
+          <div class="btn btn-lg btn-primary btn-block">{{ form.submit() }}</div>
+        </div>
     </form>
+  </div>
+</div>
 {% endblock %}
