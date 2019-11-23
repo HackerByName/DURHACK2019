@@ -3,4 +3,22 @@
 <div class="jumbotron">
 	<h1 class="display-4 text-center">User Settings</h1>
 </div>
+<div class="pt-5">
+  <div style="width: 30%; margin: 25px auto;">
+		<ul>
+      <li>
+        <label for="first_name">First Name: </label>
+        {{ user.first_name }}
+      </li>
+      <li>
+        <label for="last_name">Last Name: </label>
+        {{ user.second_name }}
+      </li>
+      <li>
+        <label for="email">Email: </label>
+        {{ user.email }}
+      </li>
+		</ul>
+  </div>
+</div>
 {% endblock %}
