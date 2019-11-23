@@ -12,6 +12,5 @@ def settings():
 
 @app.route("/user")
 def user():
-    form = UserForm()
 
     return render_template("user.html", title="User Settings", user=(session["user"] if "user" in session else None))
