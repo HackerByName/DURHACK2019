@@ -14,6 +14,10 @@ def register():
     register_form = RegisterForm()
     return render_template("register.html", form=register_form, title="Register", user=(session["user"] if "user" in session else None))
 
+@app.route("/good")
+def good():
+    return render_template("index_good.html", title="Register", user=(session["user"] if "user" in session else None))
+
 @app.route("/register", methods=["POST"])
 def process_register():
     form = RegisterForm()

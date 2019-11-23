@@ -24,3 +24,4 @@ bcrypt = Bcrypt(app)
 Session(app)
 
 from flask_site import routes
+from flask_site import more_routes
