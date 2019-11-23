@@ -4,7 +4,8 @@ from flask import render_template
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html", title="Generic", user="New User")
+    user = {"username": "Unknown User"}
+    return render_template("index.html", title="Generic", user=user)
 
 @app.route("/test")
 def another():
@@ -17,4 +18,4 @@ def user_test():
 
 @app.route("/config")
 def config_display():
-    return render_template("display.html", skey=app.config["SECRET_KEY"]);
+    return render_template("display.html", skey=app.config["SECRET_KEY"])
