@@ -15,13 +15,14 @@ class User:
     @staticmethod
     def from_record(record):
         return User(record["_id"], record["first_name"], record["last_name"],
-         record["email"])
+         record["email"], record["budgets"])
 
-    def __init__(self, id, first_name, last_name, email):
+    def __init__(self, id, first_name, last_name, email, budgets):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
+        self.budgets = budgets
 
     def create_account(self, account):
         accounts = self.get_accounts()
