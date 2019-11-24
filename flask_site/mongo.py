@@ -15,8 +15,8 @@ class MongoDatabase:
                 "created": time()
             }],
             "budgets" : {
-                "personal" : f"{0:.2f}",
-                "university" : f"{0:.2f}"
+                "personal" : 0,
+                "university" : 0
             }
         }
 
