@@ -72,9 +72,9 @@ def generate_pie_chart(bType):
     plt.close()
     return 'data:image/png;base64,{}'.format(graph_url)
 
-@app.route("/accounts")
-def accounts():
-    return render_template("accounts.html", title="Accounts", user=(session["user"] if "user" in session else None))
+@app.route("/budgets")
+def budgets():
+    return render_template("budgets.html", title="Budgeting", user=(session["user"] if "user" in session else None))
 
 @app.route("/history")
 def history():
