@@ -164,7 +164,9 @@ def process_add():
         amount = int(form.amount.data)
         notes = form.notes.data
         retailer = form.retailer.data
-        MongoDatabase.insert_new_transacation(session["user"].id, session["account"], direction * amount, notes, retailer)
+        w = str(form.when_date.data) + " " + str(form.when_time.data)
+        when = datetime.timestamp(datetime.strptime(w, "%Y-%m-%d %H:%M:%S"))
+        MongoDatabase.insert_new_transacation(session["user"].id, session["account"], direction * amount, notes, retailer, when)
 
         return redirect("/history")
 

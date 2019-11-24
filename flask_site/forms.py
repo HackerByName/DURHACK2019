@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, RadioField, FloatField
-
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, RadioField, FloatField, TimeField
+from wtforms.fields.html5 import DateField
+from datetime import datetime
 from wtforms.validators import DataRequired, Email, Required
 from flask import Flask, session
 
@@ -31,6 +32,8 @@ class PasswordForm(FlaskForm):
 class AddTransactionForm(FlaskForm):
     direction = RadioField("In / Out", choices=[("in", "In"), ("out", "Out")], validators=[DataRequired()])
     amount = FloatField("Amount", validators=[DataRequired()])
+    when_date = DateField("Date", default=datetime.now(), validators=[DataRequired()])
+    when_time = TimeField("Time", default=datetime.now().time(), validators=[DataRequired()], format="%H:%M")
     notes = TextAreaField("Notes", validators=[DataRequired()])
     retailer = StringField("Retailer", validators=[DataRequired()])
     submit = SubmitField("Add Transaction")
