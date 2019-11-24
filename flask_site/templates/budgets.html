@@ -9,6 +9,10 @@
 #university-bar {
 	width: {{ "%.2f"|format(user.budgets['university']|int / my_balance|int * 100) }}%;
 }
+
+#spare-bar {
+	width: {{ "%.2f"|format((my_balance|int - user.budgets['university']|int - user.budgets['personal']|int) / my_balance|int * 100) }}%;
+}
 </style>
 <div class="jumbotron">
 	<h1 class="display-4 text-center">My Dashboard</h1>
@@ -43,7 +47,9 @@
 						<tbody>
 							<td></td>
 							<td>
-								<h3 style="text-align: center;">Balance: £{{ my_balance }}</h3><h3 style="text-align: center;">University Budget Prediction of Total Balance: £{{ "%.2f"|format(user.budgets['university']) }}</h3>
+								<h3 style="text-align: center;">Balance: £{{ my_balance }}</h3>
+								<br><br>
+								<h3 style="text-align: center;">University Budget Prediction of Total Balance: £{{ "%.2f"|format(user.budgets['university']) }}</h3>
 								<div id="university-bar" style="background-color: blue; height:5%">
 									<h3 style="color: black;">{{ "%.2f"|format(user.budgets['university']|int / my_balance|int * 100) }}%</h3>
 								</div>
@@ -51,6 +57,13 @@
 								<div id="personal-bar" style="background-color: red; height:5%">
 									<h3 style="color: black;">{{ "%.2f"|format(user.budgets['personal']|int / my_balance|int * 100) }}%</h3>
 								</div>
+								<br><br>
+								<h3 style="text-align: center;">Spare Money in Balance: £{{ "%.2f"|format(my_balance|int - user.budgets['university']|int - user.budgets['personal']|int) }}</h3>
+								<div id="spare-bar" style="background-color: green; height:5%">
+									<h3 style="color: black;">{{ "%.2f"|format((my_balance|int - user.budgets['university']|int - user.budgets['personal']|int) / my_balance|int * 100) }}%</h3>
+								</div>
+
+
 								</td>
 							<td></td>
 						</tbody>
