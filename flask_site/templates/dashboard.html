@@ -26,8 +26,8 @@
 						<h2>Overview</h2>
 
 						<p class="col-xs-offset-1 text-left h4">Balance: £{{ my_balance }}</p>
-						<p class="col-xs-offset-1 text-left h4">University Costs: £{{ "%.2f"|format(user.budgets['university']) }}</p>
-						<p class="col-xs-offset-1 text-left h4">Personal Costs: £{{ "%.2f"|format(user.budgets['personal']) }}</p>
+						<p class="col-xs-offset-1 text-left h4">University Budget: £{{ "%.2f"|format(user.budgets['university']) }}</p>
+						<p class="col-xs-offset-1 text-left h4">Personal Budget: £{{ "%.2f"|format(user.budgets['personal']) }}</p>
 						<p class="col-xs-offset-1 text-left h4">Money Remaining: £{{ "%.2f"|format(my_balance|int - user.budgets['university']|int - user.budgets['personal']|int) }} </p>
 
 						<img src="/dashboard_pie_chart.png">
@@ -38,8 +38,8 @@
 						&ust=1574647177353218'">
 						<div>
 							<a class="btn btn-success btn-sm" href="/add">Add Transaction</a>
-							<a class="btn btn-warning btn-sm" href="/setUniversityBudget">Set University Costs</a>
-							<a class="btn btn-warning btn-sm" href="/setPersonalBudget">Set Personal Costs</a>
+							<a class="btn btn-warning btn-sm" href="/setUniversityBudget">Set University Budget</a>
+							<a class="btn btn-warning btn-sm" href="/setPersonalBudget">Set Personal Budget</a>
 						</div>
 					</div>
 				</div>
