@@ -109,12 +109,12 @@ def userEditPassword():
 
 @app.route("/setUniversityBudget")
 def uniBudget():
-    budget_form = userForm()
+    budget_form = UserForm()
     return render_template("setUniversityBudget.html", form=budget_form, title="Uni Budget", user=(session["user"] if "user" in session else None))
 
 @app.route("/setPersonalBudget")
 def personalBudget():
-    budget_form = userForm()
+    budget_form = UserForm()
     return render_template("setPersonalBudget.html", form=budget_form, title="Personal Budget", user=(session["user"] if "user" in session else None))
 
 @app.route("/add", methods=["GET"])
