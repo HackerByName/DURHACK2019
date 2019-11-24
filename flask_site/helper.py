@@ -54,12 +54,14 @@ class User:
         for record in transactions:
             date = record["date"]
             notes = record["notes"]
+            retailer = record["retailer"]
             balance += float(record["amount"])
 
             account_history[date] = {
                 "date": date,
                 "balance": balance,
                 "notes": notes,
+                "retailer": retailer,
                 "amount": float(record["amount"])
             }
 

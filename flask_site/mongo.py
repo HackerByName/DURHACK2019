@@ -19,13 +19,14 @@ class MongoDatabase:
         student_records.insert_one(new_user)
 
     @staticmethod
-    def insert_new_transacation(student_id, account_name, amount, notes):
+    def insert_new_transacation(student_id, account_name, amount, notes, retailer):
         new_transaction = {
             "student_id": str(student_id),
             "account_name": str(account_name),
             "amount": f"{amount:.2f}",
             "date": time(),
-            "notes": notes
+            "notes": notes,
+            "retailer": retailer
         }
 
         transaction_records.insert_one(new_transaction)

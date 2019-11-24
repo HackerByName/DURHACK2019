@@ -32,4 +32,5 @@ class AddTransactionForm(FlaskForm):
     direction = RadioField("In / Out", choices=[("in", "In"), ("out", "Out")], validators=[DataRequired()])
     amount = FloatField("Amount", validators=[DataRequired()])
     notes = TextAreaField("Notes", validators=[DataRequired()])
+    retailer = StringField("Retailer", validators=[DataRequired()])
     submit = SubmitField("Add Transaction")

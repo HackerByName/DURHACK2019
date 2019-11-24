@@ -58,7 +58,7 @@ def history():
 
     for k in sorted(acc_history, reverse=True):
         new_dict = {"date": datetime.utcfromtimestamp(acc_history[k]["date"]).strftime('%Y-%m-%d %H:%M:%S'),
-        "balance": f'{acc_history[k]["balance"]:.2f}', "notes": acc_history[k]["notes"], "amount": f'{acc_history[k]["amount"]:.2f}'}
+        "balance": f'{acc_history[k]["balance"]:.2f}', "notes": acc_history[k]["notes"], "amount": f'{acc_history[k]["amount"]:.2f}', "retailer": acc_history[k]["retailer"]}
         his.append(new_dict)
 
     return render_template("history.html", title="History", user=(session["user"] if "user" in session else None), transaction_history=his)
@@ -96,6 +96,7 @@ def process_add():
         print(direction)
         amount = int(form.amount.data)
         notes = form.notes.data
+        retailer = form.retailer.data
         MongoDatabase.insert_new_transacation(session["user"].id, session["account"], direction * amount, notes)
 
         return redirect("/history")
