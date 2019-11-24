@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Email
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, RadioField, FloatField
+
+from wtforms.validators import DataRequired, Email, Required
+from flask import Flask, session
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -21,7 +23,13 @@ class UserForm(FlaskForm):
     submit = SubmitField('Update')
 
 class PasswordForm(FlaskForm):
-    password = StringField('Old Password', validators=[DataRequired()])
+    password = PasswordField('Old Password', validators=[DataRequired()])
     new_password = PasswordField('New Password', validators=[DataRequired()])
-    confirm_password = PasswordField('New Password Again', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm New Password', validators=[DataRequired()])
     submit = SubmitField('Update')
+
+class AddTransactionForm(FlaskForm):
+    direction = RadioField("In / Out", choices=[("in", "In"), ("out", "Out")], validators=[DataRequired()])
+    amount = FloatField("Amount", validators=[DataRequired()])
+    notes = TextAreaField("Notes", validators=[DataRequired()])
+    submit = SubmitField("Add Transaction")
