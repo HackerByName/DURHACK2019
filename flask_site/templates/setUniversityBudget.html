@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="jumbotron">
+	<h1 class="display-4 text-center">University Budget</h1>
+</div>
+<div class="pt-5">
+  <div style="width: 30%; margin: 25px auto;">
+    <form action="" method="post" novalidate>
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        <label for="email">{{ form.email.label }}</label>
+        {{ form.email(class='form-control', value=user.email, disabled=True) }}
+      </div>
+      <div class="form-group">
+        <label for="first_name">{{ form.first_name.label }}</label>
+        {{ form.first_name(class='form-control', value=user.first_name) }}
+        {% for error in form.first_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        <label for="last_name">{{ form.last_name.label }}</label>
+        {{ form.last_name(class='form-control', value=user.last_name) }}
+        {% for error in form.last_name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+      </div>
+      <div class="form-group">
+        {{ form.submit(class='btn btn-lg btn-primary btn-block') }}
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
