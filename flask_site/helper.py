@@ -49,6 +49,8 @@ class User:
 
     def generate_account_history(self, account):
         transactions = self.get_account_transacations(account)
+        transactions = [x for x in transactions]
+        transactions = sorted(transactions, key=lambda x: x["date"])
         balance = 0
         account_history = {}
 
@@ -58,6 +60,8 @@ class User:
             retailer = record["retailer"]
             balance += float(record["amount"])
 
+            #print(balance, record["amount"])
+
             account_history[date] = {
                 "date": date,
                 "balance": balance,
@@ -66,4 +70,5 @@ class User:
                 "amount": float(record["amount"])
             }
 
+        #print("Acc_history:", account_history)
         return account_history
