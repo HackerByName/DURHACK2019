@@ -43,7 +43,7 @@ def create_basic_visual(balances):
 
     minimum = min(x_points)
     x_points = [(x - minimum) for x in x_points]
-    axis.plot(x_points, y_points, ro)
+    axis.plot(x_points, y_points)
     return figure
 
 @app.route("/accounts")
@@ -53,11 +53,12 @@ def accounts():
 @app.route("/history")
 def history():
     acc_history = session["user"].generate_account_history(session["account"])
+    print(acc_history)
     his = []
 
     for k in sorted(acc_history, reverse=True):
         new_dict = {"date": datetime.utcfromtimestamp(acc_history[k]["date"]).strftime('%Y-%m-%d %H:%M:%S'),
-        "balance": f'{acc_history[k]["balance"]:.2f}', "notes": acc_history[k]["notes"]}
+        "balance": f'{acc_history[k]["balance"]:.2f}', "notes": acc_history[k]["notes"], "amount": f'{acc_history[k]["amount"]:.2f}'}
         his.append(new_dict)
 
     return render_template("history.html", title="History", user=(session["user"] if "user" in session else None), transaction_history=his)

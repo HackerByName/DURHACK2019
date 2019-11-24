@@ -59,7 +59,8 @@ class User:
             account_history[date] = {
                 "date": date,
                 "balance": balance,
-                "notes": notes
+                "notes": notes,
+                "amount": float(record["amount"])
             }
 
         return account_history
