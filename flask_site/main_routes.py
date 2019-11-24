@@ -38,8 +38,9 @@ def generate_basic_graph():
 def create_basic_visual(balances):
     figure = Figure()
     axis = figure.add_subplot(1, 1, 1)
-    #figure.ylabel("Balance (£)")
-    #figure.xlabel("Date")
+    axis.set_ylabel("Balance (£)")
+    axis.set_xlabel("Date")
+
     x_points = []
     y_points = []
 
@@ -48,21 +49,24 @@ def create_basic_visual(balances):
         y_points.append(element["balance"])
 
     minimum = min(x_points)
-    x_points = [(x - minimum) for x in x_points]
+    x_points = [datetime.utcfromtimestamp(x).strftime('%d/%m/%Y %H:%M') for x in x_points]
     axis.plot(x_points, y_points)
+    figure.autofmt_xdate()
+    figure.tight_layout()
     return figure
 
 @app.route("/dashboard_pie_chart.png")
 def generate_pie_chart():
-    balance = 500
-    budget = 1000
+    balance = float(MongoDatabase.get_balance(student_records, transaction_records, session["user"].id))
+    personal_budget = float(session['user'].budgets['personal'])
+    uni_budget = float(session['user'].budgets['university'])
 
     img = io.BytesIO()
 
     figure = Figure()
     ax1 = figure.add_subplot(1, 1, 1)
-    labels = 'Budget', 'Leftover'
-    sizes = [balance, budget-balance]
+    labels = ['Remaining', 'University Budget', 'Personal Budget']
+    sizes = [balance - personal_budget - uni_budget, uni_budget, personal_budget]
     ax1.pie(sizes, explode=None, labels=labels, autopct='%1.1f%%',
             shadow=False, startangle=90)
     ax1.axis('equal')
