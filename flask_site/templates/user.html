@@ -3,4 +3,26 @@
 <div class="jumbotron">
 	<h1 class="display-4 text-center">User Settings</h1>
 </div>
+<div class="pt-5">
+  <div style="width: 30%; margin: 25px auto;">
+		<ul class="list-unstyled h3">
+      <li>
+        <label for="first_name">First Name: </label>
+        {{ user.first_name }}
+      </li>
+      <li>
+        <label for="last_name">Last Name: </label>
+        {{ user.last_name }}
+      </li>
+      <li>
+        <label for="email">Email: </label>
+        {{ user.email }}
+      </li>
+		</ul>
+		<div class="text-center">
+			<a class="btn btn-warning btn-sm" href="#">Edit</a>
+			<a class="btn btn-danger btn-sm" href="#">Delete</a>
+		</div>
+  </div>
+</div>
 {% endblock %}

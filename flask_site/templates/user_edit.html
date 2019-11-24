@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+	<div class="pt-5">
+		<h1 style="text-align: center">Profile Edit</h1>
+		<div style="width: 30%; margin: 25px auto;">
+			<p><em>Note: Cannot Change Username</em></p>
+			<form action="/users/<%= user._id %>?_method=PUT" method="POST">
+				<div class="form-group">
+					<label for="firstName">First Name<span class="required">*</span></label>
+					<input class="form-control" type="text" name="user[firstName]" id="firstName" placeholder="John" value="<%= user.firstName %>" required>
+				</div>
+				<div class="form-group">
+					<label for="lastName">Last Name<span class="required">*</span></label>
+					<input class="form-control" type="text" name="user[lastName]" id="lastName" placeholder="Smith" value="<%= user.lastName %>" required>
+				</div>
+				<div class="form-group">
+					<label for="email">Email<span class="required">*</span></label>
+					<input class="form-control" type="email" name="user[email]" id="email" placeholder="JohnSmith@hotmail.com" value="<%= user.email %>" required>
+				</div>
+				<div class="form-group">
+					<label for="avatar">Profile Picture</label>
+					<input class="form-control" type="text" name="user[avatar]" id="avatar" placeholder="http://..." value="<%= user.avatar %>">
+				</div>
+				<div class="form-group">
+					<label for="avatar">Bio</label>
+					<textarea class="form-control rounded-0" name="user[bio]" id="custom-textarea" rows="10" ><%= user.bio %></textarea>
+				</div>
+				<div class="form-group">
+					<button class="btn btn-lg btn-primary btn-block">Save!</button>
+				</div>
+			</form>
+			<p class="required">* required information</p>
+			<a href="/users/<%= user._id %>">Go Back</a>
+		</div>
+	</div>
+{% endblock %}
