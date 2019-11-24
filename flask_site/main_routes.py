@@ -1,6 +1,6 @@
 from flask_site import *
 from flask import render_template, flash, redirect, Response
-from flask_site.forms import UserForm, PasswordForm, AddTransactionForm
+from flask_site.forms import *
 from .mongo import MongoDatabase
 from .helper import Verifications, User
 from datetime import datetime
@@ -14,6 +14,9 @@ import base64
 def dashboard():
     if "user" not in session:
         return redirect("/index")
+
+    this_id = session["user"].id
+    session["user"] = User.from_record(MongoDatabase.find_record(student_records, {"_id": this_id}))
 
     balance_history = session["user"].generate_account_history("personal")
     balance = [balance_history[k] for k in balance_history]
@@ -53,9 +56,9 @@ def create_basic_visual(balances):
 def generate_pie_chart(bType):
     balance = 500
     budget = 1000
-    
+
     img = io.BytesIO()
-    
+
     labels = 'Budget', 'Leftover'
     sizes = [balance, budget-balance]
     fig1, ax1 = plt.subplots()
@@ -107,14 +110,44 @@ def userEditPassword():
     pass_form = PasswordForm()
     return render_template("user_change_password.html", form=pass_form, title="User Edit", user=(session["user"] if "user" in session else None))
 
-@app.route("/setUniversityBudget")
+@app.route("/setUniversityBudget", methods=["GET"])
 def uniBudget():
-    budget_form = UserForm()
+    budget_form = UniversityBudgetForm()
     return render_template("setUniversityBudget.html", form=budget_form, title="Uni Budget", user=(session["user"] if "user" in session else None))
 
-@app.route("/setPersonalBudget")
+@app.route("/setUniversityBudget", methods=["POST"])
+def uniBudgetPost():
+
+    form = UniversityBudgetForm()
+
+    if form.validate_on_submit():
+        user = MongoDatabase.find_record(student_records, {"_id":session["user"].id})
+        university_budget = int(form.university_budget.data)
+        user['budgets']['university'] = university_budget
+        dictionary = {"$set": user}
+        MongoDatabase.update_student(session["user"].id, dictionary)
+
+        return redirect("/dashboard")
+    return render_template("setUniversityBudget.html", form=budget_form, title="Uni Budget", user=(session["user"] if "user" in session else None))
+
+@app.route("/setPersonalBudget", methods=["GET"])
 def personalBudget():
-    budget_form = UserForm()
+    budget_form = PersonalBudgetForm()
+    return render_template("setPersonalBudget.html", form=budget_form, title="Personal Budget", user=(session["user"] if "user" in session else None))
+
+@app.route("/setPersonalBudget", methods=["POST"])
+def personalBudgetPost():
+
+    form = PersonalBudgetForm()
+
+    if form.validate_on_submit():
+        user = MongoDatabase.find_record(student_records, {"_id":session["user"].id})
+        personal_budget = int(form.personal_budget.data)
+        user['budgets']['personal'] = personal_budget
+        dictionary = {"$set": user}
+        MongoDatabase.update_student(session["user"].id, dictionary)
+
+        return redirect("/dashboard")
     return render_template("setPersonalBudget.html", form=budget_form, title="Personal Budget", user=(session["user"] if "user" in session else None))
 
 @app.route("/add", methods=["GET"])
@@ -127,9 +160,7 @@ def process_add():
     form = AddTransactionForm()
 
     if form.validate_on_submit():
-        print(form.direction.data)
         direction = 1 if form.direction.data == 'in' else -1
-        print(direction)
         amount = int(form.amount.data)
         notes = form.notes.data
         retailer = form.retailer.data

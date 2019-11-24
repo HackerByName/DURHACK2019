@@ -26,9 +26,9 @@
 						<h2>Overview</h2>
 
 						<p class="col-xs-offset-1 text-left h4">Balance: £{{ my_balance }}</p>
-						<p class="col-xs-offset-1 text-left h4">University Budget: £{{ "%.2f"|format(user.budgets['university']) }}</p>
-						<p class="col-xs-offset-1 text-left h4">Personal Budget: £{{ "%.2f"|format(user.budgets['personal']) }}</p>
-						<p class="col-xs-offset-1 text-left h4">Money Remaining: £{{ "%.2f"|format(my_balance|int - user.budgets['university']|int - user.budgets['personal']|int) }} </p>
+						<p class="col-xs-offset-1 text-left h4">Predicted University Budget: £{{ "%.2f"|format(user.budgets['university']) }}</p>
+						<p class="col-xs-offset-1 text-left h4">Predicted Personal Budget: £{{ "%.2f"|format(user.budgets['personal']) }}</p>
+						<p class="col-xs-offset-1 text-left h4">Predicted Money Remaining: £{{ "%.2f"|format(my_balance|int - user.budgets['university']|int - user.budgets['personal']|int) }} </p>
 
 						<img src="/dashboard_pie_chart.png">
 						<img src="/dashboard_basic_graph.png" onerror="this.src='

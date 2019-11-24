@@ -34,3 +34,11 @@ class AddTransactionForm(FlaskForm):
     notes = TextAreaField("Notes", validators=[DataRequired()])
     retailer = StringField("Retailer", validators=[DataRequired()])
     submit = SubmitField("Add Transaction")
+
+class UniversityBudgetForm(FlaskForm):
+    university_budget = StringField("University Budget", validators=[DataRequired()])
+    submit = SubmitField("Set Budget")
+
+class PersonalBudgetForm(FlaskForm):
+    personal_budget = StringField("Personal Budget", validators=[DataRequired()])
+    submit = SubmitField("Set Budget")
