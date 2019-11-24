@@ -53,27 +53,55 @@ def create_basic_visual(balances):
     return figure
 
 @app.route("/dashboard_pie_chart.png")
-def generate_pie_chart(bType):
+def generate_pie_chart():
     balance = 500
     budget = 1000
 
     img = io.BytesIO()
 
+    figure = Figure()
+    ax1 = figure.add_subplot(1, 1, 1)
     labels = 'Budget', 'Leftover'
     sizes = [balance, budget-balance]
-    fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=none, labels=labels, autopct='%1.1f%%',
+    ax1.pie(sizes, explode=None, labels=labels, autopct='%1.1f%%',
             shadow=False, startangle=90)
     ax1.axis('equal')
+    FigureCanvas(figure).print_png(img)
+    return Response(img.getvalue(), mimetype='image/png')
 
-    figure = ax1
-    plt.plot(figure)
-    plt.savefig(img, format='png')
-    FigureCanvas(figure).print_png(output)
-    img.seek(0)
-    graph_url = base64.b64encode(img.getvalue()).decode()
-    plt.close()
-    return 'data:image/png;base64,{}'.format(graph_url)
+@app.route("/dashboard_retailer_breakdown.png")
+def generate_retailer_breakdown():
+    balance_history = session["user"].generate_account_history("personal")
+    balances = [balance_history[k] for k in balance_history]
+
+    retailers = {}
+
+    for record in balances:
+        if record["retailer"] in retailers:
+            retailers[record["retailer"]] += record["amount"]
+        else:
+            retailers[record["retailer"]] = record["amount"]
+
+    labels = []
+    chunks = []
+
+    for k in retailers:
+        if retailers[k] <= 0:
+            continue
+
+        labels.append(k + ": £" + f'{retailers[k]:.2f}')
+        chunks.append(retailers[k])
+
+    print(labels)
+    print(chunks)
+
+    img = io.BytesIO()
+    figure = Figure()
+    axis = figure.add_subplot(1, 1, 1)
+    axis.pie(chunks, explode=None, labels=labels, autopct='%1.1f%%', shadow=False, startangle=90)
+    axis.axis("equal")
+    FigureCanvas(figure).print_png(img)
+    return Response(img.getvalue(), mimetype='image/png')
 
 @app.route("/budgets")
 def budgets():
