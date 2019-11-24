@@ -18,6 +18,10 @@ class UserForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Old Password', validators=[DataRequired()])
-    newPassword = PasswordField('New Password', validators=[DataRequired()])
+    submit = SubmitField('Update')
+
+class PasswordForm(FlaskForm):
+    password = StringField('Old Password', validators=[DataRequired()])
+    new_password = PasswordField('New Password', validators=[DataRequired()])
+    confirm_password = PasswordField('New Password Again', validators=[DataRequired()])
     submit = SubmitField('Update')

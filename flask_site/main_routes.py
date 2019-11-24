@@ -1,6 +1,6 @@
 from flask_site import *
 from flask import render_template, flash, redirect
-from flask_site.forms import LoginForm, RegisterForm
+from flask_site.forms import UserForm, PasswordForm
 from .mongo import MongoDatabase
 from .helper import Verifications, User
 
@@ -31,3 +31,13 @@ def settings():
 @app.route("/user")
 def user():
     return render_template("user.html", title="User Settings", user=(session["user"] if "user" in session else None))
+
+@app.route("/user/edit")
+def userEdit():
+    user_form = UserForm()
+    return render_template("user_edit.html", form=user_form, title="User Edit", user=(session["user"] if "user" in session else None))
+
+@app.route("/user/change_password")
+def userEditPassword():
+    pass_form = PasswordForm()
+    return render_template("user_change_password.html", form=pass_form, title="User Edit", user=(session["user"] if "user" in session else None))
