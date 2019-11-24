@@ -82,11 +82,11 @@ def budgets():
 @app.route("/history")
 def history():
     acc_history = session["user"].generate_account_history(session["account"])
-    print(acc_history)
+    #print(acc_history)
     his = []
 
     for k in sorted(acc_history, reverse=True):
-        new_dict = {"date": datetime.utcfromtimestamp(acc_history[k]["date"]).strftime('%Y-%m-%d %H:%M:%S'),
+        new_dict = {"date": datetime.utcfromtimestamp(acc_history[k]["date"]).strftime('%d/%m/%Y %H:%M'),
         "balance": f'{acc_history[k]["balance"]:.2f}', "notes": acc_history[k]["notes"], "amount": f'{acc_history[k]["amount"]:.2f}', "retailer": acc_history[k]["retailer"]}
         his.append(new_dict)
 
