@@ -23,14 +23,28 @@
 			<div class="container-border">
 				<div class="card card-body bg-secondary" style="height:50%">
 						<h2 class="text-center">History</h2>
-						<table>
-							<thead><th>Date</th><th>Notes</th><th>Balance (£)</th></thead>
-							<tbody>
-								{% for transaction in transaction_history %}
-									<tr><td>{{ transaction["date"] }}</td><td>{{ transaction["notes"] }}</td><td>{{ transaction["balance"] }}</td></tr>
-				        {% endfor %}
-							</tbody>
-						</table>
+						<div class="row mt-4">
+							<div class="col-xs-1"></div>
+							<div class="col-xs-10">
+								<table class="table table-striped table-bordered pt-4">
+									<thead><th>Date</th><th>Notes</th><th>Balance (£)</th></thead>
+									<tbody>
+										{% for transaction in transaction_history %}
+											<tr><td>{{ transaction["date"] }}</td><td>{{ transaction["notes"] }}</td>
+												{% if transaction["balance"]|int > 0 %}
+													<td class="text-success">{{ "+" + transaction["balance"] }}</td>
+												{% else %}
+													<td class="text-danger">{{ transaction["balance"] }}</td>
+												{% endif %}
+												</tr>
+
+						        {% endfor %}
+									</tbody>
+								</table>
+								<a class="btn btn-success btn-sm" href="/add">Add Transaction</a>
+							</div>
+						</div>
+						<div class="col-xs-1"></div>
 				</div>
 			</div>
 		</div>

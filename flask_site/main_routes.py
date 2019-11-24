@@ -59,8 +59,10 @@ def process_add():
     form = AddTransactionForm()
 
     if form.validate_on_submit():
-        direction = 1 if form.direction.data == "in" else -1
-        amount = form.amount.data
+        print(form.direction.data)
+        direction = 1 if form.direction.data == 'in' else -1
+        print(direction)
+        amount = int(form.amount.data)
         notes = form.notes.data
         MongoDatabase.insert_new_transacation(session["user"].id, session["account"], direction * amount, notes)
 
