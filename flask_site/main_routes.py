@@ -107,6 +107,16 @@ def userEditPassword():
     pass_form = PasswordForm()
     return render_template("user_change_password.html", form=pass_form, title="User Edit", user=(session["user"] if "user" in session else None))
 
+@app.route("/uniBudget")
+def uniBudget():
+    budget_form = userForm()
+    return render_template("setUniversityBudget.html", form=budget_form, title="User Edit", user=(session["user"] if "user" in session else None))
+
+@app.route("/personalBudget")
+def personalBudget():
+    budget_form = userForm()
+    return render_template("setPersonalBudget.html", form=budget_form, title="User Edit", user=(session["user"] if "user" in session else None))
+
 @app.route("/add", methods=["GET"])
 def add():
     form = AddTransactionForm()
