@@ -31,18 +31,18 @@ We're going to try to add in the extended functionality it deserves to have, suc
 
 ## Built With:
 
-⋅⋅* bootstrap
-⋅⋅* django
-⋅⋅* flask
-⋅⋅* google-cloud
-⋅⋅* html
-⋅⋅* mongodb
-⋅⋅* python
+*  bootstrap
+* django
+* flask
+* google-cloud
+* html
+* mongodb
+* python
 
 ## Try it out:
 
-⋅⋅* Website: https://durhack2019hackerbyname.appspot.com/
-.⋅* GitHub: https://github.com/HackerByName/DURHACK2019
+* Website: https://durhack2019hackerbyname.appspot.com/
+* GitHub: https://github.com/HackerByName/DURHACK2019
 
 
 
