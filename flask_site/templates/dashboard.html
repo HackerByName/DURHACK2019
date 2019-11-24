@@ -30,6 +30,7 @@
 						<p class="col-xs-offset-1 text-left h4">Personal Costs: £{{ "%.2f"|format(user.budgets['personal']) }}</p>
 						<p class="col-xs-offset-1 text-left h4">Money Remaining: £{{ "%.2f"|format(my_balance|int - user.budgets['university']|int - user.budgets['personal']|int) }} </p>
 
+						<img src="/dashboard_pie_chart.png">
 						<img src="/dashboard_basic_graph.png" onerror="this.src='
 						https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=
 						8&ved=2ahUKEwiDl7aJ4IHmAhVBQBoKHZOOBJ4QjRx6BAgBEAQ&url=https%3A%2F%2Fetc.usf.edu

@@ -6,7 +6,9 @@ from .helper import Verifications, User
 from datetime import datetime
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
+from matplotlib import pyplot as plt
 import io
+import base64
 
 @app.route("/dashboard")
 def dashboard():
@@ -46,6 +48,29 @@ def create_basic_visual(balances):
     x_points = [(x - minimum) for x in x_points]
     axis.plot(x_points, y_points)
     return figure
+
+@app.route("/dashboard_pie_chart.png")
+def generate_pie_chart(bType):
+    balance = 500
+    budget = 1000
+    
+    img = io.BytesIO()
+    
+    labels = 'Budget', 'Leftover'
+    sizes = [balance, budget-balance]
+    fig1, ax1 = plt.subplots()
+    ax1.pie(sizes, explode=none, labels=labels, autopct='%1.1f%%',
+            shadow=False, startangle=90)
+    ax1.axis('equal')
+
+    figure = ax1
+    plt.plot(figure)
+    plt.savefig(img, format='png')
+    FigureCanvas(figure).print_png(output)
+    img.seek(0)
+    graph_url = base64.b64encode(img.getvalue()).decode()
+    plt.close()
+    return 'data:image/png;base64,{}'.format(graph_url)
 
 @app.route("/accounts")
 def accounts():
