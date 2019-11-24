@@ -15,7 +15,7 @@ def index():
 def register():
     register_form = RegisterForm()
     return render_template("register.html", form=register_form, title="Register", user=(session["user"] if "user" in session else None))
-    
+
 @app.route("/register", methods=["POST"])
 def process_register():
     form = RegisterForm()
@@ -60,6 +60,7 @@ def process_login():
             return redirect("/index")
 
         session["user"] = User.from_record(user_record)
+        session["account"] = "personal"
 
         #flash("Logged in, {}".format(email))
         return redirect("/index")

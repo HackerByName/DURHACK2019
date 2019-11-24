@@ -1,10 +1,8 @@
 from flask_site import *
 from flask import render_template, flash, redirect
-from flask_site.forms import LoginForm, RegisterForm
+from flask_site.forms import AddTransactionForm
 from .mongo import MongoDatabase
 from .helper import Verifications, User
-
-
 
 @app.route("/dashboard")
 def dashboard():
@@ -31,3 +29,22 @@ def settings():
 @app.route("/user")
 def user():
     return render_template("user.html", title="User Settings", user=(session["user"] if "user" in session else None))
+
+@app.route("/add", methods=["GET"])
+def add():
+    form = AddTransactionForm()
+    return render_template("add.html", title="Add Transaction", user=(session["user"] if "user" in session else None), form=form)
+
+@app.route("/add", methods=["POST"])
+def process_add():
+    form = AddTransactionForm()
+
+    if form.validate_on_submit():
+        direction = 1 if form.direction.data == "in" else -1
+        amount = form.amount.data
+        notes = form.notes.data
+        MongoDatabase.insert_new_transacation(session["user"].id, session["account"], direction * amount, notes)
+
+        return redirect("/history")
+
+    return render_template("add.html", title="Add Transaction", user=(session["user"] if "user" in session else None), form=form)
