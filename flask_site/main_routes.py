@@ -53,9 +53,9 @@ def create_basic_visual(balances):
 def generate_pie_chart(bType):
     balance = 500
     budget = 1000
-    
+
     img = io.BytesIO()
-    
+
     labels = 'Budget', 'Leftover'
     sizes = [balance, budget-balance]
     fig1, ax1 = plt.subplots()
@@ -127,13 +127,13 @@ def process_add():
     form = AddTransactionForm()
 
     if form.validate_on_submit():
-        print(form.direction.data)
         direction = 1 if form.direction.data == 'in' else -1
-        print(direction)
         amount = int(form.amount.data)
         notes = form.notes.data
         retailer = form.retailer.data
-        MongoDatabase.insert_new_transacation(session["user"].id, session["account"], direction * amount, notes, retailer)
+        w = str(form.when_date.data) + " " + str(form.when_time.data)
+        when = datetime.timestamp(datetime.strptime(w, "%Y-%m-%d %H:%M:%S"))
+        MongoDatabase.insert_new_transacation(session["user"].id, session["account"], direction * amount, notes, retailer, when)
 
         return redirect("/history")
 
