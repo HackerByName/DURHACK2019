@@ -105,7 +105,8 @@ def generate_retailer_breakdown():
 
 @app.route("/budgets")
 def budgets():
-    return render_template("budgets.html", title="Budgeting", user=(session["user"] if "user" in session else None))
+    curr_balance = MongoDatabase.get_balance(student_records, transaction_records, session["user"].id)
+    return render_template("budgets.html", title="Budgeting", user=(session["user"] if "user" in session else None), my_balance=curr_balance)
 
 @app.route("/history")
 def history():

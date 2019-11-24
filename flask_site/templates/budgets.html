@@ -1,5 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
+
+<style>
+#personal-bar {
+	width: {{ "%.2f"|format(user.budgets['personal']|int / my_balance|int * 100) }}%;
+}
+
+#university-bar {
+	width: {{ "%.2f"|format(user.budgets['university']|int / my_balance|int * 100) }}%;
+}
+
+#spare-bar {
+	width: {{ "%.2f"|format((my_balance|int - user.budgets['university']|int - user.budgets['personal']|int) / my_balance|int * 100) }}%;
+}
+</style>
 <div class="jumbotron">
 	<h1 class="display-4 text-center">My Dashboard</h1>
 </div>
@@ -22,7 +36,7 @@
 		<div id="main-dashboard-body" >
 			<div class="container-border">
 				<div class="card card-body bg-secondary" style="min-height:50%">
-					<table width="100%"> 
+					<table width="100%">
 						<thead>
 							<th width="10%"></th>
 							<th width="80">
@@ -33,15 +47,29 @@
 						<tbody>
 							<td></td>
 							<td>
-								<h3 style="text-align: center;">Personal:</h3>
-								<div style="background-color: darkslategrey; width:75%; height:5%"><h3 style="color: white;">75%</h3></div>
-								<h3 style="text-align: center;">Uni:</h3>
-								<div style="background-color: darkslategrey; width:50%; height:5%"><h3 style="color: white;">50%</h3></div>
-							</td>
+								<h3 style="text-align: center;">Balance: £{{ my_balance }}</h3>
+								<br><br>
+								<h3 style="text-align: center;">University Budget Prediction of Total Balance: £{{ "%.2f"|format(user.budgets['university']) }}</h3>
+								<div id="university-bar" style="background-color: blue; height:5%">
+									<h3 style="color: black;">{{ "%.2f"|format(user.budgets['university']|int / my_balance|int * 100) }}%</h3>
+								</div>
+								<h3 style="text-align: center;">Personal Budget Prediction of Total Balance: £{{ "%.2f"|format(user.budgets['personal']) }}</h3>
+								<div id="personal-bar" style="background-color: red; height:5%">
+									<h3 style="color: black;">{{ "%.2f"|format(user.budgets['personal']|int / my_balance|int * 100) }}%</h3>
+								</div>
+								<br><br>
+								<h3 style="text-align: center;">Spare Money in Balance: £{{ "%.2f"|format(my_balance|int - user.budgets['university']|int - user.budgets['personal']|int) }}</h3>
+								<div id="spare-bar" style="background-color: green; height:5%">
+									<h3 style="color: black;">{{ "%.2f"|format((my_balance|int - user.budgets['university']|int - user.budgets['personal']|int) / my_balance|int * 100) }}%</h3>
+								</div>
+
+
+								</td>
 							<td></td>
 						</tbody>
 					</table>
 				</div>
+				<br><br>
 			</div>
 		</div>
 	</div>
