@@ -27,10 +27,11 @@
 							<div class="col-xs-1"></div>
 							<div class="col-xs-10">
 								<table class="table table-striped table-bordered pt-4">
-									<thead><th>Date</th><th>Notes</th><th>Amount (£)</th><th>Balance (£)</th></thead>
+									<thead><th>Date</th><th>Notes</th><th>Retailer</th><th>Amount (£)</th><th>Balance (£)</th></thead>
 									<tbody>
 										{% for transaction in transaction_history %}
 											<tr><td>{{ transaction["date"] }}</td><td>{{ transaction["notes"] }}</td>
+												<td>{{ transaction["retailer"] }}</td>
 												{% if transaction["amount"]|int > 0 %}
 													<td class="text-success">{{ "+" + transaction["amount"] }}</td>
 												{% else %}
