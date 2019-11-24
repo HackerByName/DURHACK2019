@@ -1,26 +1,28 @@
-{% extends "base.html" %}
-{% block content %}
-<div class="jumbotron" style="text-align:center">
-	<h1>Whatever the Name Is</h1>
-</div>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Cash It!</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+	</head>
+	<body>
 
-<h2 style="text-align: center;">This site is designed to make your university life easier!</h2>
-<p style="text-align: center;">Use our custom-designed tools to keep accurate track of your money across all accounts</p>
-<p style="text-align: center;">Set yourself independent budgets for home- and university-related payments.</p>
-<p style="text-align: center;">Know your status in real-time at a glance with our visual statistics tools.</p>
+		<div id="landing-header">
+			<h1 id="title">Cash It!</h1>
+			<a href="/register" class="btn btn-lg btn-primary">Sign Up</a>
+			<a href="/login" class="btn btn-lg btn-success">Log In</a>
+		</div>
 
-<table width="100%">
-	<tr>
-		<td width="10%"></td>
-		<td width="35%">
-			<a href="login"><div class="jumbotron" style="text-align:center;" width="100%" height="30%"><h2>Login</h2></div></a>
-		</td>
-		<td width="10%"></td>
-		<td width="35%">
-			<a href="register"><div class="jumbotron" style="text-align:center; background-color: rgb(189, 252, 174);" width="100%" height="30%"><h2>Register</h2></div></a>
-		</td>
-		<td width="10%"></td>
-	</tr>
-</table>
+		<ul class="slideshow">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
 
-{% endblock %}
+		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	</body>
+</html>
