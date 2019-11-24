@@ -86,6 +86,40 @@ def generate_retailer_breakdown():
     chunks = []
 
     for k in retailers:
+        if retailers[k] >= 0:
+            continue
+
+        labels.append(k + ": £" + f'{retailers[k]:.2f}')
+        chunks.append(-retailers[k])
+
+    print(labels)
+    print(chunks)
+
+    img = io.BytesIO()
+    figure = Figure()
+    axis = figure.add_subplot(1, 1, 1)
+    axis.pie(chunks, explode=None, labels=labels, autopct='%1.1f%%', shadow=False, startangle=90)
+    axis.axis("equal")
+    FigureCanvas(figure).print_png(img)
+    return Response(img.getvalue(), mimetype='image/png')
+
+@app.route("/dashboard_income_breakdown.png")
+def generate_income_breakdown():
+    balance_history = session["user"].generate_account_history("personal")
+    balances = [balance_history[k] for k in balance_history]
+
+    retailers = {}
+
+    for record in balances:
+        if record["retailer"] in retailers:
+            retailers[record["retailer"]] += record["amount"]
+        else:
+            retailers[record["retailer"]] = record["amount"]
+
+    labels = []
+    chunks = []
+
+    for k in retailers:
         if retailers[k] <= 0:
             continue
 
