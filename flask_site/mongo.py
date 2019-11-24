@@ -42,3 +42,14 @@ class MongoDatabase:
     @staticmethod
     def find_record(records, filter):
         return records.find_one(filter)
+
+    @staticmethod
+    def get_balance(student_records, transaction_records, student_id):
+        user = student_records.find_one({"_id":student_id})
+        currentBalance = 0
+
+        transactionList = []
+        transactionCursor = transaction_records.find({"student_id":str(student_id)})
+        for transaction in transactionCursor:
+            currentBalance += float(transaction['amount'])
+        return f"{currentBalance:.2f}"

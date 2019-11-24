@@ -15,8 +15,9 @@ def dashboard():
 
     balance_history = session["user"].generate_account_history("personal")
     balance = [balance_history[k] for k in balance_history]
+    curr_balance = MongoDatabase.get_balance(student_records, transaction_records, session["user"].id)
 
-    return render_template("dashboard.html", title="Dashboard", user=(session["user"] if "user" in session else None), balance_history=balance)
+    return render_template("dashboard.html", title="Dashboard", user=(session["user"] if "user" in session else None), balance_history=balance, my_balance=curr_balance)
 
 @app.route("/dashboard_basic_graph.png")
 def generate_basic_graph():
