@@ -29,6 +29,9 @@ def generate_basic_graph():
     balance_history = session["user"].generate_account_history("personal")
     balances = [balance_history[k] for k in balance_history]
 
+    if len(balances) == 0:
+        return None
+
     figure = create_basic_visual(balances)
     output = io.BytesIO()
     FigureCanvas(figure).print_png(output)
@@ -61,6 +64,9 @@ def generate_pie_chart():
     personal_budget = float(session['user'].budgets['personal'])
     uni_budget = float(session['user'].budgets['university'])
 
+    if balance == 0:
+        return None
+
     img = io.BytesIO()
 
     figure = Figure()
@@ -77,6 +83,9 @@ def generate_pie_chart():
 def generate_retailer_breakdown():
     balance_history = session["user"].generate_account_history("personal")
     balances = [balance_history[k] for k in balance_history]
+
+    if len(balances) == 0:
+        return None
 
     retailers = {}
 
@@ -112,6 +121,9 @@ def generate_income_breakdown():
     balance_history = session["user"].generate_account_history("personal")
     balances = [balance_history[k] for k in balance_history]
 
+    if len(balances) == 0:
+        return None
+        
     retailers = {}
 
     for record in balances:
@@ -144,6 +156,7 @@ def generate_income_breakdown():
 @app.route("/budgets")
 def budgets():
     curr_balance = MongoDatabase.get_balance(student_records, transaction_records, session["user"].id)
+    print(curr_balance)
     return render_template("budgets.html", title="Budgeting", user=(session["user"] if "user" in session else None), my_balance=curr_balance)
 
 @app.route("/history")
@@ -167,15 +180,20 @@ def settings():
 def user():
     return render_template("user.html", title="User Settings", user=(session["user"] if "user" in session else None))
 
-@app.route("/user/edit")
+@app.route("/user/edit", methods=["GET"])
 def userEdit():
     user_form = UserForm()
     return render_template("user_edit.html", form=user_form, title="User Edit", user=(session["user"] if "user" in session else None))
 
-@app.route("/user/change_password")
+@app.route("/user/change_password", methods=["GET"])
 def userEditPassword():
     pass_form = PasswordForm()
     return render_template("user_change_password.html", form=pass_form, title="User Edit", user=(session["user"] if "user" in session else None))
+
+@app.route("/user/change_password", methods=["POST"])
+@app.route("/user/edit", methods=["POST"])
+def doesnt_exist():
+    return render_template("not_implemented.html", title="Not Implemented", user=(session["user"] if "user" in session else None))
 
 @app.route("/setUniversityBudget", methods=["GET"])
 def uniBudget():
@@ -231,8 +249,12 @@ def process_add():
         amount = int(form.amount.data)
         notes = form.notes.data
         retailer = form.retailer.data
+        seconds = datetime.now().strftime('%S')
         w = str(form.when_date.data) + " " + str(form.when_time.data)
+        w = w[:-2] + str(seconds)
         when = datetime.timestamp(datetime.strptime(w, "%Y-%m-%d %H:%M:%S"))
+        print(when)
+
         MongoDatabase.insert_new_transacation(session["user"].id, session["account"], direction * amount, notes, retailer, when)
 
         return redirect("/history")
