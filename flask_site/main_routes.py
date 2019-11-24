@@ -3,6 +3,7 @@ from flask import render_template, flash, redirect
 from flask_site.forms import AddTransactionForm
 from .mongo import MongoDatabase
 from .helper import Verifications, User
+from datetime import datetime
 
 @app.route("/dashboard")
 def dashboard():
@@ -20,7 +21,15 @@ def accounts():
 
 @app.route("/history")
 def history():
-    return render_template("history.html", title="History", user=(session["user"] if "user" in session else None))
+    acc_history = session["user"].generate_account_history(session["account"])
+    his = []
+
+    for k in sorted(acc_history, reverse=True):
+        new_dict = {"date": datetime.utcfromtimestamp(acc_history[k]["date"]).strftime('%Y-%m-%d %H:%M:%S'),
+        "balance": f'{acc_history[k]["balance"]:.2f}', "notes": acc_history[k]["notes"]}
+        his.append(new_dict)
+
+    return render_template("history.html", title="History", user=(session["user"] if "user" in session else None), transaction_history=his)
 
 @app.route("/settings")
 def settings():
